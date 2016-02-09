@@ -1,4 +1,5 @@
 var express = require('express');
+var fortune = require('./lib/fortune.js');
 
 var app = express();
 
@@ -13,13 +14,6 @@ app.set('port', process.env.PORT || 8081);
 //setup static middleware
 app.use(express.static(__dirname + '/public'));
 
-// Random JSON Data
-var fortunes = [
-	"Fear is the mind killer!",
-	"Worry is unproductive!",
-	"Whenever possible, keep it simple!",
-	"Do not fear what you do not know!",
-	"First try to understand, before you are understood!"];
 
 
 //Additional Routing
@@ -29,9 +23,7 @@ app.get('/', function(req, res) {
 
 //About routing
 app.get('/about', function(res, res) {
-        var randomFortune = fortunes[Math.floor(Math.random() *fortunes.length)];
-
-	res.render('about', {fortune : randomFortune});
+	res.render('about', {fortune : fortune.getFortune()});
 });
 
 //404 catch-all handler (middleware)
